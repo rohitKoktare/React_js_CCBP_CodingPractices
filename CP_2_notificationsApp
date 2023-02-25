@@ -1,0 +1,91 @@
+const Notification = (props) => {
+  //  Write your code here.
+  const { first, className, logo, div } = props;
+
+  return (
+    <div className={div}>
+      <img src={logo} />
+      <p className={className}>{first}</p>
+    </div>
+  );
+};
+
+const element = (
+  //  Write your code here.
+
+  <div className="mainCard">
+    <h1 className="heading">Notification</h1>
+    <Notification
+      first="trial"
+      className="red"
+      logo="https://assets.ccbp.in/frontend/react-js/primary-icon-img.png"
+      div="redDiv"
+    />
+    <Notification
+      first="trial"
+      className="red"
+      logo="https://assets.ccbp.in/frontend/react-js/primary-icon-img.png"
+      div="redDiv"
+    />
+    <Notification
+      first="trial"
+      className="red"
+      logo="https://assets.ccbp.in/frontend/react-js/primary-icon-img.png"
+      div="redDiv"
+    />
+    <Notification
+      first="trial"
+      className="red"
+      logo="https://assets.ccbp.in/frontend/react-js/primary-icon-img.png"
+      div="redDiv"
+    />
+  </div>
+);
+
+ReactDOM.render(element, document.getElementById("root"));
+
+
+
+###################
+/* Write your code here. */
+.red {
+  color: white;
+}
+.heading {
+  color: black;
+}
+.mainCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.redDiv {
+  background-color: red;
+  height: 20vh;
+  width: 70vw;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#########################
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://unpkg.com/react@17.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" src="./index.js"></script>
+  </body>
+</html>
+
