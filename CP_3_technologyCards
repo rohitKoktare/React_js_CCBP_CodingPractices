@@ -1,0 +1,170 @@
+#####################
+index,js
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root'),
+)
+#################
+app.js
+import './App.css'
+
+import UserProfile from './components/CardItem'
+
+const cardsList = [
+  {
+    id: 1,
+    title: 'Data Scientist',
+    description:
+      'Data scientists gather and analyze large sets of structured and unstructured data',
+    imgUrl: 'https://assets.ccbp.in/frontend/react-js/data-scientist-img.png',
+    className: 'card-1',
+  },
+  {
+    id: 2,
+    title: 'IOT Developer',
+    description:
+      'IoT Developers are professionals who can develop, manage, and monitor IoT devices.',
+    imgUrl: 'https://assets.ccbp.in/frontend/react-js/iot-developer-img.png',
+    className: 'card-2',
+  },
+  {
+    id: 3,
+    title: 'VR Developer',
+    description:
+      'A VR developer creates completely new digital environments that people can see.',
+    imgUrl: 'https://assets.ccbp.in/frontend/react-js/vr-developer-img.png',
+    className: 'card-3',
+  },
+  {
+    id: 4,
+    title: 'ML Engineer',
+    description:
+      'Machine learning engineers feed data into models defined by data scientists.',
+    imgUrl: 'https://assets.ccbp.in/frontend/react-js/ml-engineer-img.png',
+    className: 'card-4',
+  },
+]
+
+const App = () => (
+  <div>
+    <h1>Learn 4.0 Technologies</h1>
+    <p>
+      Get trained by alumni of IITs and top companies like Amazon, Microsoft,
+      Intel, Nvidia, Qualcomm, etc. Learn directly from professionals involved
+      in Product Development.
+    </p>
+    <ul>
+      {cardsList.map(each => (
+        <UserProfile userDetails={each} key={each.id} />
+      ))}
+    </ul>
+  </div>
+)
+
+export default App
+#############################
+app.css
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Write CSS code here */
+.trial {
+  display: flex;
+  overflow: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#############################
+index.js
+
+// Write your code here.
+import './index.css'
+
+const UserProfile = props => {
+  const {userDetails} = props
+  const {title, description, imgUrl, className} = userDetails
+
+  return (
+    <li className={className}>
+      <h1>{title}</h1>
+      <p>{description}</p>
+      <img src={imgUrl} alt={title} />
+    </li>
+  )
+}
+
+export default UserProfile
+
+#######################
+index.css
+
+.card-1 {
+  border-top: 5px solid #ff4f64;
+  width: 500px;
+  height: 400px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-2 {
+  border-top: 5px solid #00a8e7;
+  width: 500px;
+  height: 400px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-3 {
+  border-top: 5px solid #44c4a1;
+  width: 500px;
+  height: 400px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-4 {
+  border-top: 5px solid #fcc200;
+  width: 500px;
+  height: 400px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Write CSS code here. */
+img {
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
