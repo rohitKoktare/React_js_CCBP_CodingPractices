@@ -1,0 +1,135 @@
+MAin index.js File
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root'),
+)
+
+
+#############################
+#App.js file
+
+import './App.css'
+
+import UserProfile from './components/BannerCardItem/index'
+
+const bannerCardsList = [
+  {
+    id: 1,
+    headerText: 'The Seasons Latest',
+    description: 'Get the seasons all latest designs in a flick of your hand',
+    className: 'card-1',
+  },
+  {
+    id: 2,
+    headerText: 'Our New Designs',
+    description:
+      'Get the designs developed by our in-house team all for yourself',
+    className: 'card-2',
+  },
+  {
+    id: 3,
+    headerText: 'Insiders',
+    description: 'Get the top class products for yourself with an extra off',
+    className: 'card-3',
+  },
+]
+
+const App = () => (
+  <div>
+    <ul>
+      {bannerCardsList.map(each => (
+        <UserProfile userDetails={each} key={each.id} />
+      ))}
+    </ul>
+  </div>
+)
+
+export default App
+######################
+
+
+#App.css file
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Write your code here. */
+
+
+#####################################
+# Compound=> BannerCardItem => Index.js
+
+// Write your code here.
+import './index.css'
+
+const UserProfile = props => {
+  const {userDetails} = props
+  const {headerText, description, className} = userDetails
+
+  return (
+    <li className={className}>
+      <h1>{headerText}</h1>
+      <p>{description}</p>
+      <button type="button">Show More</button>
+    </li>
+  )
+}
+export default UserProfile
+########################
+.card-1 {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/reusable-banners-card-1-bg.png');
+  background-size: cover;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+.card-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/reusable-banners-card-2-bg.png');
+  background-size: cover;
+  flex-direction: column;
+  height: 30vh;
+}
+
+.card-3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/reusable-banners-card-3-bg.png');
+  background-size: cover;
+  height: 30vh;
+}
+
+/* Write your code here. */
+button {
+  height: 50px;
+  width: 150px;
+  background-color: transparent;
+  border-width: 3px;
+  border-style: solid;
+  border-color: blueviolet;
+  padding: 10px;
+}
