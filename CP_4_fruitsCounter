@@ -1,0 +1,109 @@
+// Write your code here
+import './index.css'
+
+import {Component} from 'react'
+
+class FruitsCounter extends Component {
+  state = {count: 0, count1: 0}
+
+  clicked = () => {
+    this.setState(prevState => {
+      console.log('prevState Is triggered')
+      return {count: prevState.count + 1}
+    })
+  }
+
+  maked = () => {
+    this.setState(prevState => {
+      console.log('prevState Is triggered')
+      return {count1: prevState.count1 + 1}
+    })
+  }
+
+  render() {
+    const {count, count1} = this.state
+    return (
+      <div className="bgContainer">
+        <div className="fruitContainer">
+          <h1>
+            Bob ate <span className="spanner">{count}</span> mangoes{' '}
+            <span className="spanner">{count1}</span> bananas
+          </h1>
+          <div className="photoDiv">
+            <div className="photoButton">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/mango-img.png"
+                alt="mango"
+                className="images"
+              />
+              <button onClick={this.clicked} type="button" className="mango">
+                Eat Mango
+              </button>
+            </div>
+            <div className="photoButton">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/banana-img.png"
+                alt="banana"
+                className="images"
+              />
+              <button type="button" onClick={this.maked} className="mango">
+                Eat Banana
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+export default FruitsCounter
+############################
+/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  background-color: #ffd569;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.fruitContainer {
+  background-color: white;
+  height: 75vh;
+  width: 75vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.spanner {
+  color: #ffd569;
+}
+.images {
+  height: 30vh;
+}
+.photoDiv {
+  display: flex;
+}
+.photoButton {
+  display: flex;
+  flex-direction: column;
+}
+.mango {
+  height: 20px;
+  width: 150px;
+  background-color: #ffd569;
+}
+###############
+import FruitsCounter from './components/FruitsCounter'
+
+import './App.css'
+
+const App = () => <FruitsCounter />
+
+export default App
