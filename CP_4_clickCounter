@@ -1,0 +1,87 @@
+index.js
+
+// Write your code here
+import './index.css'
+import {Component} from 'react'
+
+class Welcome extends Component {
+  state = {count: 0}
+
+  clicked = () => {
+    this.setState(prevState => {
+      console.log('prevState Is triggered')
+      return {count: prevState.count + 1}
+    })
+  }
+
+  render() {
+    const {count} = this.state
+    return (
+      <div className="bgContainer">
+        <h1>
+          The Button has Been Clicked <span className="spanner">{count}</span>{' '}
+          times
+        </h1>
+        <p>Click the button to increase the count</p>
+        <button type="button" className="button" onClick={this.clicked}>
+          Click Me
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Welcome
+
+
+###########
+index.css
+
+/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  background-color: lightblue;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.spanner {
+  color: red;
+}
+.button {
+  background-color: rgb(103, 103, 214);
+  height: 30px;
+  width: 150px;
+  text-align: center;
+  margin-top: 20px;
+  border-color: white;
+  border-radius: 15px;
+  border-style: solid;
+}
+
+########################
+App.js
+import Welcome from './components/ClickCounter'
+
+import './App.css'
+
+const App = () => <Welcome />
+
+export default App
+#######################
+main index.js
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root'),
+)
