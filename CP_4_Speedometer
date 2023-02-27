@@ -1,0 +1,69 @@
+##############
+index.js
+
+// Write your code here
+import './index.css'
+
+import {Component} from 'react'
+
+class Speedometer extends Component {
+  state = {count: 0}
+
+  increase = () => {
+    console.log('clicked')
+    this.setState(prevState => {
+      console.log('prevTriggered')
+      return {count: prevState.count + 10}
+    })
+  }
+
+  decrease = () => {
+    console.log('decrease')
+    this.setState(prevState => {
+      console.log('trial')
+      return {count: prevState.count - 10}
+    })
+  }
+
+  render() {
+    const {count} = this.state
+
+    return (
+      <div className="bgContainer">
+        <h1>SPEEDOMETER</h1>
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/speedometer-img.png"
+          alt="Speedometer"
+          className="image"
+        />
+        <h1>
+          Speed is <span>{count}</span>mph
+        </h1>
+        <p>Min limit is 0mph, Max Limit is 200mph</p>
+        <div>
+          <button type="button" onClick={this.increase}>
+            Accelerate
+          </button>
+          <button type="button" onClick={this.decrease}>
+            Apply Brake
+          </button>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Speedometer
+
+###############
+App.js
+
+import Speedometer from './components/Speedometer'
+
+import './App.css'
+
+const App = () => <Speedometer />
+
+export default App
+
+
