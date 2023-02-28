@@ -1,0 +1,83 @@
+home.js
+// Write your code here
+import {Component} from 'react'
+import Login from '../Login'
+import Logout from '../Logout'
+import Message from '../Message'
+import './index.css'
+
+class Home extends Component {
+  state = {status: true}
+
+  loginClicked = () => {
+    this.setState(prevState => ({status: !prevState.status}))
+    console.log('login clicked')
+  }
+
+  render() {
+    const {status} = this.state
+
+    return (
+      <div className="bgContainer">
+        <div className="cardContainer">
+          {status ? (
+            <Message message="Please Login" />
+          ) : (
+            <Message message="Welcome User" />
+          )}
+          {status ? (
+            <Login name="Login" onClick={this.loginClicked} />
+          ) : (
+            <Logout name="Logout" onClick={this.loginClicked} />
+          )}
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Home
+
+
+######################################
+message.js
+// Write your code here
+
+const Message = props => {
+  const {message} = props
+  return <h1>{message}</h1>
+}
+
+export default Message
+##############################################################
+login.js
+
+// Write your code here
+import './index.css'
+
+const Login = props => {
+  const {name, onClick} = props
+  return (
+    <button type="button" onClick={onClick}>
+      Login
+    </button>
+  )
+}
+
+export default Login
+
+################################
+logout.js
+
+// Write your code here
+
+const Logout = props => {
+  const {name, onClick} = props
+  return (
+    <button onClick={onClick} type="button">
+      {name}
+    </button>
+  )
+}
+
+export default Logout
