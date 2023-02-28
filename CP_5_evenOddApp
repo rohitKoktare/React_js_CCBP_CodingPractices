@@ -1,0 +1,47 @@
+// Write your code here
+import './index.css'
+import {Component} from 'react'
+
+class EvenOddApp extends Component {
+  state = {number: 0}
+
+  increaseNum = () => {
+    console.log('Triggered')
+    const a = Math.floor(Math.random() * 100)
+    console.log(a)
+    this.setState(prevState => ({number: prevState.number + a}))
+  }
+
+  generateNumber = () => {
+    const {number} = this.state
+    let evenOdd
+
+    if (number % 2 === 0) {
+      evenOdd = 'Count is Even'
+    } else {
+      evenOdd = 'Count is Odd'
+    }
+    const allData = {
+      number: `Count ${number}`,
+      evenOdd,
+    }
+    return allData
+  }
+
+  render() {
+    const {number, evenOdd} = this.generateNumber()
+    console.log(number, evenOdd)
+    return (
+      <div className="bgContainer">
+        <h1>{number}</h1>
+        <p>{evenOdd}</p>
+        <button onClick={this.increaseNum} type="button">
+          Increment
+        </button>
+        <p>Increase By Random Number Between 0 to 100</p>
+      </div>
+    )
+  }
+}
+
+export default EvenOddApp
