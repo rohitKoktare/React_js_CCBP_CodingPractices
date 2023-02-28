@@ -1,0 +1,46 @@
+// Write your code here
+import './index.css'
+
+import {Component} from 'react'
+
+class LightDarkMode extends Component {
+  state = {status: true}
+
+  whenClicked = () => {
+    this.setState(prevState => ({status: !prevState.status}))
+    console.log(this.state)
+  }
+
+  trialFunction = () => {
+    const {status} = this.state
+    const bgCont = status ? 'light' : 'dark'
+    const buttonCont = status ? 'lightbtn' : 'darkbtn'
+    const text = status ? 'Light Mode' : 'Dark Mode'
+    const allData = {
+      bgCont,
+      buttonCont,
+      text,
+    }
+    return allData
+  }
+
+  render() {
+    const {bgCont, buttonCont, text} = this.trialFunction()
+    console.log(bgCont, buttonCont)
+    return (
+      <div className="mainCon">
+        <div className={bgCont}>
+          <h1 className="heading">Click to change Mode</h1>
+          <button
+            className={buttonCont}
+            type="button"
+            onClick={this.whenClicked}
+          >
+            {text}
+          </button>
+        </div>
+      </div>
+    )
+  }
+}
+export default LightDarkMode
