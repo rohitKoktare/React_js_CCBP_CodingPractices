@@ -1,0 +1,78 @@
+// Write your code here
+import './index.css'
+
+import {Component} from 'react'
+
+class RandomNumberGenerator extends Component {
+  state = {count: 0}
+
+  getRandom = () => {
+    console.log('Get Triggered')
+    const number = Math.ceil(Math.random() * 100)
+    this.setState({count: number})
+    console.log(number)
+  }
+
+  render() {
+    const {count} = this.state
+    return (
+      <div className="bgContainer">
+        <div className="card">
+          <h1>Random Number</h1>
+          <p>Generate a random number in the range of 0 to 100</p>
+          <button type="button" className="button" onClick={this.getRandom}>
+            Generate
+          </button>
+          <p className="numberRandom">{count}</p>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default RandomNumberGenerator
+
+
+#######################
+/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.trial {
+  color: red;
+}
+.bgContainer {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/random-no-generator-bg.png');
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  background-color: white;
+  height: 60vh;
+  width: 45vw;
+  border-style: none;
+  box-shadow: 0px 4px 16px 0px #bfbfbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  background-color: #0b69ff;
+  height: 30px;
+  width: 150px;
+  border-radius: 14px;
+  border-style: none;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.numberRandom {
+  color: #0b69ff;
+  font-weight: 900;
+  font-size: 50px;
+}
