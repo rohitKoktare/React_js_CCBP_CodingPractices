@@ -1,0 +1,187 @@
+DominationItem
+index.js
+
+// Write your code here
+import './index.css'
+
+const DenominationItem = props => {
+  const {balance, func, hundared, donshe, pachshe} = props
+
+  const balanceFifty = () => {
+    console.log('50')
+    console.log(balance)
+    const fifty = 50
+    func(fifty)
+  }
+
+  const balanceHundared = () => {
+    console.log('100')
+    console.log(balance)
+    const fifty = 100
+    hundared(fifty)
+  }
+
+  const balanceDonshe = () => {
+    console.log('200')
+    console.log(balance)
+    const fifty = 200
+    donshe(fifty)
+  }
+
+  const balancePachshe = () => {
+    console.log('200')
+    console.log(balance)
+    const fifty = 500
+    pachshe(fifty)
+  }
+
+  return (
+    <div className="bgContainer">
+      <div className="bgCard">
+        <h1>Hello world</h1>
+        <div className="countAll">
+          <p>Your Balance</p>
+          <p>{balance}</p>
+        </div>
+        <p>Withdraw</p>
+        <p>CHOOSE SUM (IN RUPEES)</p>
+        <ul>
+          <li>
+            <button type="button" onClick={balanceFifty}>
+              50
+            </button>
+          </li>
+          <li>
+            <button type="button" onClick={balanceHundared}>
+              100
+            </button>
+          </li>
+          <li>
+            <button type="button" onClick={balanceDonshe}>
+              200
+            </button>
+          </li>
+          <li>
+            <button type="button" onClick={balancePachshe}>
+              500
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+export default DenominationItem
+
+
+
+#################
+CashWithdrowal
+index.js
+
+// Write your code here
+import './index.css'
+
+const DenominationItem = props => {
+  const {balance, func, hundared, donshe, pachshe} = props
+
+  const balanceFifty = () => {
+    console.log('50')
+    console.log(balance)
+    const fifty = 50
+    func(fifty)
+  }
+
+  const balanceHundared = () => {
+    console.log('100')
+    console.log(balance)
+    const fifty = 100
+    hundared(fifty)
+  }
+
+  const balanceDonshe = () => {
+    console.log('200')
+    console.log(balance)
+    const fifty = 200
+    donshe(fifty)
+  }
+
+  const balancePachshe = () => {
+    console.log('200')
+    console.log(balance)
+    const fifty = 500
+    pachshe(fifty)
+  }
+
+  return (
+    <div className="bgContainer">
+      <div className="bgCard">
+        <h1>Hello world</h1>
+        <div className="countAll">
+          <p>Your Balance</p>
+          <p>{balance}</p>
+        </div>
+        <p>Withdraw</p>
+        <p>CHOOSE SUM (IN RUPEES)</p>
+        <ul>
+          <li>
+            <button type="button" onClick={balanceFifty}>
+              50
+            </button>
+          </li>
+          <li>
+            <button type="button" onClick={balanceHundared}>
+              100
+            </button>
+          </li>
+          <li>
+            <button type="button" onClick={balanceDonshe}>
+              200
+            </button>
+          </li>
+          <li>
+            <button type="button" onClick={balancePachshe}>
+              500
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+export default DenominationItem
+
+
+
+#########
+App.js
+
+import CashWithdrawal from './components/CashWithdrawal'
+
+import './App.css'
+
+const denominationsList = [
+  {
+    id: 1,
+    value: 50,
+  },
+  {
+    id: 2,
+    value: 100,
+  },
+  {
+    id: 3,
+    value: 200,
+  },
+  {
+    id: 4,
+    value: 500,
+  },
+]
+
+const App = () => <CashWithdrawal denominationsList={denominationsList} />
+
+export default App
+
