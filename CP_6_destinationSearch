@@ -1,0 +1,66 @@
+DestinationSearch 
+index.js
+
+// Write your code here
+import {Component} from 'react'
+import './index.css'
+
+import DestinationItems from '../DestinationItem'
+
+class DestinationSearch extends Component {
+  state = {text: ''}
+
+  onChange = event => {
+    const trial = event.target.value
+    this.setState({text: trial})
+  }
+
+  render() {
+    const {destinationsList} = this.props
+    const a = this.state
+    const {text} = a
+    console.log(text)
+    const searchList = destinationsList.filter(eachList =>
+      eachList.name.toLowerCase().includes(text.toLowerCase()),
+    )
+    console.log(searchList)
+    return (
+      <div className="bgContainer">
+        <h1>Destination Search</h1>
+        <input type="search" onChange={this.onChange} />
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/destinations-search-icon-img.png"
+          alt="search icon"
+          className="search-icon"
+        />
+        <div className="listCont">
+          <ul>
+            {searchList.map(each => (
+              <DestinationItems destinationsList={each} key={each.id} />
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default DestinationSearch
+
+
+
+DestinationItens 
+index.js
+// Write your code here
+const DestinationItem = props => {
+  const {destinationsList} = props
+  const {name, imgUrl} = destinationsList
+  return (
+    <li>
+      <p>{name}</p>
+      <img src={imgUrl} alt={name} />
+    </li>
+  )
+}
+
+export default DestinationItem
