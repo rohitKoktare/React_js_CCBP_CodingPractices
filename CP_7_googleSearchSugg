@@ -1,0 +1,172 @@
+Suggestion Item
+
+index.js
+
+// Write your code here
+import './index.css'
+
+const SuggestionItem = props => {
+  const {suggestion, updateSearch} = props
+  const updateClick = () => {
+    updateSearch(suggestion)
+  }
+  return (
+    <li className="listInfo">
+      <p>{suggestion}</p>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/diagonal-arrow-left-up.png"
+        alt="arrow"
+        className="arrow"
+        onClick={updateClick}
+      />
+    </li>
+  )
+}
+
+export default SuggestionItem
+############
+/* Write your CSS here */
+.listInfo {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.arrow {
+  height: 3vh;
+}
+
+
+###############################################################################
+Google Suggestion
+
+// Write your code here
+import {Component} from 'react'
+import SuggestionItem from '../SuggestionItem'
+import './index.css'
+
+class GoogleSuggestions extends Component {
+  state = {list: ''}
+
+  inputCheck = event => {
+    this.setState({list: event.target.value})
+  }
+
+  updateSearch = value => {
+    this.setState({list: value})
+    console.log(value)
+  }
+
+  render() {
+    const {suggestionsList} = this.props
+    const {list} = this.state
+
+    const searchList = suggestionsList.filter(each =>
+      each.suggestion.toLowerCase().includes(list.toLowerCase()),
+    )
+
+    return (
+      <div className="bgContainer">
+        <div className="googleCont">
+          <img
+            src="https://assets.ccbp.in/frontend/react-js/google-logo.png"
+            alt="google logo"
+            className="googleImg"
+          />
+          <div className="inputCont">
+            <div className="inputData">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/google-search-icon.png"
+                alt="search icon"
+                className="searchLogo"
+              />
+              <input
+                type="search"
+                className="inputAttribute"
+                onChange={this.inputCheck}
+                value={list}
+              />
+            </div>
+          </div>
+          <div className="dataCont">
+            <ul>
+              {searchList.map(each => (
+                <SuggestionItem
+                  suggestion={each.suggestion}
+                  updateSearch={this.updateSearch}
+                  key={each.id}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default GoogleSuggestions
+######################################
+/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  background-color: aliceblue;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.googleCont {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.googleImg {
+  height: 20vh;
+}
+.inputCont {
+  background-color: white;
+  height: 5vh;
+  width: 40vw;
+  border-radius: 15px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.inputData {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+.searchLogo {
+  height: 5vh;
+}
+.inputAttribute {
+  width: 30vw;
+  height: 4vh;
+  border-radius: 15px;
+  border-width: 0ch;
+}
+.dataCont {
+  border-radius: 15px;
+  min-height: 20vh;
+  max-height: 50vh;
+  background-color: white;
+  width: 40vw;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: darkgray;
+}
+
+###########################
