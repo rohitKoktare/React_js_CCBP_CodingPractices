@@ -1,0 +1,120 @@
+import {Component} from 'react'
+import './index.css'
+import History from '../History'
+
+class BrowserHistory extends Component {
+  state = {searchData: '', historyList: []}
+
+  componentDidMount() {
+    const {initialHistoryList} = this.props
+    this.setState({historyList: initialHistoryList})
+  }
+
+  onSearchChanges = event => {
+    const a = event.target.value
+    this.setState({searchData: event.target.value})
+  }
+
+  deleteFn = id => {
+    const {historyList} = this.state
+    const updatedList = historyList.filter(each => each.id !== id)
+    this.setState({historyList: updatedList})
+  }
+
+  filterSearchList = () => {
+    const {searchData, historyList} = this.state
+    const filterList = historyList.filter(each =>
+      each.title.toLowerCase().includes(searchData.toLowerCase()),
+    )
+    return filterList
+  }
+
+  render() {
+    const {searchData, historyList} = this.state
+    const {initialHistoryList} = this.props
+    const filterList = this.filterSearchList()
+    console.log(filterList)
+    return (
+      <div className="bgContainer">
+        <div className="navBar">
+          <img
+            src="https://assets.ccbp.in/frontend/react-js/history-website-logo-img.png"
+            alt="app logo"
+            className="images"
+          />
+          <img
+            src="https://assets.ccbp.in/frontend/react-js/search-img.png"
+            alt="search"
+            className="searchimages"
+          />
+          <input
+            type="search"
+            placeholder="search history"
+            onChange={this.onSearchChanges}
+            className="input"
+          />
+        </div>
+        <div className="normalWind">
+          <div className="searchCards">
+            <div className="trial">
+              {filterList.length === 0 ? (
+                <p>There is no history to show</p>
+              ) : (
+                <ul>
+                  {filterList.map(each => (
+                    <History
+                      history={each}
+                      key={each.id}
+                      onDeleteClick={this.deleteFn}
+                    />
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default BrowserHistory
+
+
+
+
+
+
+##################################
+
+
+import './index.css'
+
+const History = props => {
+  const {history, onDeleteClick} = props
+  const {title, id, timeAccessed, logoUrl, domainUrl} = history
+
+  const onDeleteTrial = () => {
+    onDeleteClick(id)
+  }
+
+  return (
+    <li className="list">
+      <p className="timeAccessed">{timeAccessed}</p>
+      <div className="trial">
+        <img src={logoUrl} alt="domain logo" className="logo" />
+        <p>{title}</p>
+        <p>{domainUrl}</p>
+      </div>
+      <button type="button" className="deleteLogo" onClick={onDeleteTrial}>
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/delete-img.png"
+          alt="delete"
+        />
+      </button>
+    </li>
+  )
+}
+
+export default History
+
