@@ -1,0 +1,62 @@
+// Write your React code here.
+import {Component} from 'react'
+import './index.css'
+
+class Feedback extends Component {
+  state = {statusOfClick: true}
+
+  clicking = () => [this.setState({statusOfClick: false})]
+
+  renderFeedbackQuestion = () => {
+    const a = null
+    const {resources} = this.props
+    const {emojis} = resources
+
+    return (
+      <div>
+        <h1>How satisfied are you with our customer support performance?</h1>
+        <ul className="ul">
+          {emojis.map(each => (
+            <li className="listing" key={each.id}>
+              <button type="button" onClick={this.clicking}>
+                <img src={each.imageUrl} alt={each.name} />
+                <br />
+                <span> {each.name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  thankYouFeedback = () => {
+    const a = null
+    return (
+      <div className="thankYou">
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/love-emoji-img.png"
+          alt="love emoji"
+        />
+        <h1>Thank You!</h1>
+        <p>
+          We will use your feedback to improve our customer support performance.
+        </p>
+      </div>
+    )
+  }
+
+  render() {
+    const {statusOfClick} = this.state
+    console.log(statusOfClick)
+    return (
+      <div className="bgContainer">
+        {statusOfClick
+          ? this.renderFeedbackQuestion()
+          : this.thankYouFeedback()}
+      </div>
+    )
+  }
+}
+
+export default Feedback
