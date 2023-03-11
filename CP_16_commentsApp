@@ -1,0 +1,316 @@
+import {Component} from 'react'
+import './index.css'
+import {v4 as uuidv4} from 'uuid'
+import CommentItem from '../CommentItem'
+
+const initialContainerBackgroundClassNames = [
+  'amber',
+  'blue',
+  'orange',
+  'emerald',
+  'teal',
+  'red',
+  'light-blue',
+]
+
+// Write your code here
+class Comments extends Component {
+  state = {name: '', comment: '', commentList: []}
+
+  changeName = event => {
+    this.setState({name: event.target.value})
+  }
+
+  changeComment = event => {
+    this.setState({comment: event.target.value})
+    console.log(event.target.value)
+  }
+
+  lickingCom = id => {
+    this.setState(prevState => ({
+      commentList: prevState.commentList.map(each => {
+        if (id === each.id) {
+          return {...each, like: !each.like}
+        }
+        return each
+      }),
+    }))
+  }
+
+  deletingCom = id => {
+    const {commentList} = this.state
+    this.setState({
+      commentList: commentList.filter(comment => comment.id !== id),
+    })
+  }
+
+  onAddComment = event => {
+    event.preventDefault()
+    const {name, comment} = this.state
+    const backColor = Math.floor(
+      Math.random() * initialContainerBackgroundClassNames.length - 1,
+    )
+    const backgroundColor = initialContainerBackgroundClassNames[backColor]
+    console.log(backColor)
+    console.log(name, comment)
+    const newListComm = {
+      id: uuidv4(),
+      name,
+      comment,
+      backgroundColor,
+      postTime: new Date(),
+      like: true,
+    }
+    this.setState(prevState => ({
+      commentList: [...prevState.commentList, newListComm],
+      name: '',
+      comment: '',
+    }))
+  }
+
+  render() {
+    const {commentList} = this.state
+    const lengts = commentList.length
+    return (
+      <div className="bgContainer">
+        <div className="inputCard">
+          <h1>Comments</h1>
+          <div>
+            <div className="cardUpper">
+              <form className="form">
+                <p>Say something about 4.0 Technologies</p>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  onChange={this.changeName}
+                />
+                <textarea
+                  type="text"
+                  placeholder="Your Comment"
+                  onChange={this.changeComment}
+                />
+                <button
+                  type="submit"
+                  className="add-button"
+                  onClick={this.onAddComment}
+                >
+                  Add Comment
+                </button>
+              </form>
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/comments-app/comments-img.png"
+                alt="comments"
+                className="images"
+              />
+            </div>
+            <div className="commentsCard">
+              <p>{lengts} Comments </p>
+            </div>
+            <div className="listingAll">
+              <ul>
+                {commentList.map(each => (
+                  <CommentItem
+                    commentDetail={each}
+                    key={each.id}
+                    backgroundColor={each.backgroundColor}
+                    onLikeComm={this.lickingCom}
+                    onDeleteComm={this.deletingCom}
+                  />
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Comments
+
+
+
+
+##########################################################
+CSS
+
+/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  height: 100vh;
+  width: 100vw;
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inputCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cardUpper {
+  display: flex;
+  flex-direction: row;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.add-button {
+  background-color: blue;
+  color: white;
+  height: 40px;
+  width: 100px;
+}
+.listingAll {
+  overflow-x: auto;
+}
+###########################################################################################
+// Write your code here
+import './index.css'
+import {formatDistanceToNow} from 'date-fns'
+
+const CommentItem = props => {
+  const {commentDetail, backgroundColor, onLikeComm, onDeleteComm} = props
+  const {id, name, comment, postTime, like} = commentDetail
+  const firstLetter = commentDetail.name[0]
+  const dateNew = formatDistanceToNow(postTime)
+  const likePhoto = like
+    ? 'https://assets.ccbp.in/frontend/react-js/comments-app/like-img.png'
+    : 'https://assets.ccbp.in/frontend/react-js/comments-app/liked-img.png'
+
+  const deletFn = () => {
+    console.log(`delete clicked${id}`)
+    onDeleteComm(id)
+  }
+
+  const lickedButton = () => {
+    console.log('like is clicked')
+    onLikeComm(id)
+  }
+
+  return (
+    <li className="listType ">
+      <div className="normal">
+        <h1 className={backgroundColor}>{firstLetter}</h1>
+        <p>{name}</p>
+        <p>{dateNew}</p>
+      </div>
+      <p>{comment}</p>
+      <div>
+        <img src={likePhoto} alt="like" />
+        <button type="button" onClick={lickedButton}>
+          Like
+        </button>
+      </div>
+      <button
+        type="button"
+        className="delete"
+        data-testid="delete"
+        onClick={deletFn}
+      >
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/comments-app/delete-img.png"
+          alt="delete"
+        />
+      </button>
+    </li>
+  )
+}
+
+export default CommentItem
+##########################################
+.amber {
+  background-color: #f59e0b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+}
+
+.blue {
+  background-color: #0b69ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+}
+
+.orange {
+  background-color: #f97316;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+}
+
+.emerald {
+  background-color: #10b981;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+}
+
+.teal {
+  background-color: #14b8a6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+}
+
+.red {
+  background-color: #b91c1c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+}
+
+.light-blue {
+  background-color: #0ea5e9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+}
+
+/* Write your CSS here */
+.listType {
+  list-style-type: none;
+  display: flex;
+}
+.normal {
+  display: flex;
+}
+.delete {
+  background-color: transparent;
+}
