@@ -1,0 +1,217 @@
+import {Component} from 'react'
+import {v4 as uuidv4} from 'uuid'
+import {format} from 'date-fns'
+import AppointmentItem from '../AppointmentItem'
+import './index.css'
+
+class Appointments extends Component {
+  state = {name: '', date: '', isStar: false, appList: [], isFilter: false}
+
+  onTitleChange = event => {
+    this.setState({name: event.target.value})
+  }
+
+  onFilterClicked = () => {
+    const {appList, isFilter} = this.state
+    if (isFilter) {
+      return appList.filter(each => each.isStar === true)
+    }
+    return appList
+  }
+
+  filterStar = () => {
+    const {isFilter} = this.state
+    console.log('filter Clicked')
+    this.setState({isFilter: !isFilter})
+  }
+
+  clickedStar = id => {
+    this.setState(prevState => ({
+      appList: prevState.appList.map(each => {
+        if (each.id === id) {
+          return {...each, isStar: !each.isStar}
+        }
+        return each
+      }),
+    }))
+  }
+
+  onAdd = event => {
+    event.preventDefault()
+    const {name, date} = this.state
+    const dateFormat = date ? format(new Date(date), 'dd MM yy, EEEE') : ''
+
+    const newAppo = {
+      id: uuidv4(),
+      name,
+      date: dateFormat,
+      isFavourite: false,
+    }
+    this.setState(prevState => ({
+      appList: [...prevState.appList, newAppo],
+      name: '',
+      date: '',
+    }))
+  }
+
+  dateChange = event => {
+    this.setState({date: event.target.value})
+  }
+
+  render() {
+    const {appList, isFilter} = this.state
+    const onFilterClicked = this.onFilterClicked()
+    console.log(onFilterClicked)
+    console.log(isFilter)
+    return (
+      <div className="bgContainer">
+        <div className="container">
+          <div className="topCard">
+            <form onSubmit={this.onAdd}>
+              <div className="inputCont">
+                <h1 className="heading">Add Appointment</h1>
+                <label htmlFor="title">TITLE</label>
+                <input
+                  type="text"
+                  id="title"
+                  placeholder="Title"
+                  onChange={this.onTitleChange}
+                />
+                <label htmlFor="date">DATE</label>
+                <input type="date" id="date" onChange={this.dateChange} />
+                <button type="submit">Add</button>
+              </div>
+            </form>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/appointments-app/appointments-img.png"
+              alt="appointments"
+              className="images"
+            />
+          </div>
+          <div>
+            <div className="line">
+              <h1>Appointments</h1>
+              <button type="button" onClick={this.filterStar}>
+                Starred
+              </button>
+            </div>
+            <div className="allLists">
+              <ul>
+                {onFilterClicked.map(each => (
+                  <AppointmentItem
+                    eachTrial={each}
+                    key={each.id}
+                    clickedStar={this.clickedStar}
+                  />
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+export default Appointments
+########################################/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  background-image: linear-gradient(#9796f0, #fbc7d4);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.topCard {
+  border: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 40vh;
+}
+.container {
+  background-color: white;
+  border-radius: 15px;
+  height: 40vh;
+  width: 90vw;
+}
+.heading {
+  align-self: flex-start;
+}
+.inputCont {
+  display: flex;
+  flex-direction: column;
+}
+.images {
+  height: 30vh;
+}
+.hr {
+  color: darkgray;
+  width: 3px;
+}
+.allLists {
+  flex-wrap: wrap;
+}
+.line {
+  display: flex;
+  justify-content: space-around;
+}
+###################################################################################
+// Write your code here
+import './index.css'
+
+const AppointmentItem = props => {
+  const {eachTrial, clickedStar} = props
+  const {name, id, date, isStar} = eachTrial
+
+  const starClick = () => {
+    clickedStar(id)
+  }
+
+  const starStatus = isStar
+    ? 'https://assets.ccbp.in/frontend/react-js/appointments-app/filled-star-img.png'
+    : 'https://assets.ccbp.in/frontend/react-js/appointments-app/star-img.png'
+
+  return (
+    <li className="list">
+      <div className="info">
+        <p>{name}</p>
+        <p>Date {date}</p>
+      </div>
+      <button type="button" onClick={starClick} data-testid="star">
+        <img src={starStatus} className="image" alt="star" />
+      </button>
+    </li>
+  )
+}
+
+export default AppointmentItem
+#######################################################
+/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.list {
+  list-style-type: none;
+  background-color: white;
+  height: 100px;
+  width: 200px;
+  border-radius: 20px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.image {
+  height: 3vh;
+  width: 3vw;
+}
