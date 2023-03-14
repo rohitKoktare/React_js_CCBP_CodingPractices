@@ -1,0 +1,130 @@
+import {Component} from 'react'
+import Clock from './components/Clock'
+
+import './App.css'
+
+class App extends Component {
+  state = {trial: true}
+
+  changeState = () => {
+    this.setState(prevState => ({trial: !prevState.trial}))
+  }
+
+  render() {
+    const {trial} = this.state
+
+    return (
+      <div className="app-container">
+        <button
+          type="button"
+          className="toggle-button"
+          onClick={this.changeState}
+        >
+          {trial ? 'Show Clock' : 'Hide Clock'}
+        </button>
+        {trial && <Clock trial={trial} />}
+      </div>
+    )
+  }
+}
+
+export default App
+#############################################
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  height: 100vh;
+  background-color: #011526;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+
+.toggle-button {
+  padding: 8px 12px;
+  margin-bottom: 30px;
+  color: #ffffff;
+  background-color: #2EC2B3;
+  border-radius: 4px;
+  font-weight: 400;
+  font-family: 'Roboto';
+  font-size: 16px;
+  border: none;
+}
+###############################################################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+import {Component} from 'react'
+import './index.css'
+
+class Clock extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {date: new Date()}
+    console.log('constructor is called')
+  }
+
+  componentDidMount() {
+    console.log('Counstructor did count')
+    this.timerID = setInterval(this.clickTime, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID)
+    console.log('unmount successfully')
+  }
+
+  clickTime = () => {
+    this.setState({date: new Date()})
+  }
+
+  render() {
+    const {trial} = this.props
+    const {date} = this.state
+    console.log(date)
+    console.log('render is called')
+
+    return (
+      <div className="clock-container">
+        <h1 className="heading">{trial ? 'clocl' : 'BOcha'}</h1>
+        <p className="time">{date.toLocaleTimeString()}</p>
+      </div>
+    )
+  }
+}
+export default Clock
+##############################################################
+.clock-container {
+  background-color: #ffffff15;
+  border-radius: 16px;
+  padding: 30px 50px 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  color: white;
+  font-size: 40px;
+  margin-bottom: 20px;
+  font-family: 'Roboto';
+  font-weight: 400;
+}
+
+.time {
+  color: white;
+  font-size: 60px;
+  margin: 20px;
+  font-family: 'Roboto';
+}
