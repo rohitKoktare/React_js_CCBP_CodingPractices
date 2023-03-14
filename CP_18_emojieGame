@@ -1,0 +1,344 @@
+/* 
+Quick Tip 
+
+- Use the below function in the EmojiGame Component to shuffle the emojisList every time when an emoji is clicked.
+
+const shuffledEmojisList = () => {
+  const {emojisList} = this.props
+  return emojisList.sort(() => Math.random() - 0.5)
+}
+
+*/
+
+// Write your code here.
+import {Component} from 'react'
+import NavBar from '../NavBar'
+import EmojiCard from '../EmojiCard'
+import WinOrLooseCard from '../WinOrLoseCard'
+import './index.css'
+
+class EmojiGame extends Component {
+  state = {idList: [], topScore: 0, gameStatus: true}
+
+  renderFrontPage = currentScore => {
+    const {topScore} = this.state
+    let newTop = topScore
+    if (currentScore > topScore) {
+      newTop = currentScore
+      this.setState({topScore: newTop, gameStatus: false})
+    }
+  }
+
+  resetGame = () => {
+    this.setState({idList: [], gameStatus: true})
+  }
+
+  gamestatusFalse = () => {
+    const {idList, topScore} = this.state
+    const {emojisList} = this.props
+    const isWon = idList.length === emojisList.length
+    return (
+      <WinOrLooseCard
+        isWon={isWon}
+        score={idList.length}
+        onClickPlayAgain={this.resetGame}
+      />
+    )
+  }
+
+  clickEmoji = id => {
+    const {idList, topScore, gameStatus} = this.state
+    const {emojisList} = this.props
+    const presentId = idList.includes(id)
+    const tempScore = idList.length
+    if (presentId) {
+      this.renderFrontPage(tempScore)
+    } else {
+      if (emojisList.length - 1 === tempScore) {
+        this.renderFrontPage(tempScore)
+      }
+      this.setState(prevState => ({
+        idList: [...prevState.idList, id],
+      }))
+    }
+  }
+
+  shuffledEmojisList = () => {
+    const {emojisList} = this.props
+    return emojisList.sort(() => Math.random() - 0.5)
+  }
+
+  listEmoji = () => {
+    const {emojisList} = this.props
+    const first = emojisList[0]
+    const shuffledEmojisList = this.shuffledEmojisList()
+
+    return (
+      <ul className="emojiCont">
+        {shuffledEmojisList.map(each => (
+          <EmojiCard first={each} key={each.id} clickEmoji={this.clickEmoji} />
+        ))}
+      </ul>
+    )
+  }
+
+  render() {
+    const {idList, gameStatus, topScore} = this.state
+    const tempScore = idList.length
+    console.log(idList)
+    console.log(tempScore)
+    const {emojisList} = this.props
+    const first = emojisList[0]
+    const shuffledEmojisList = this.shuffledEmojisList()
+
+    return (
+      <div className="bgContainer">
+        <NavBar idList={idList} topScore={topScore} tempScore={tempScore} />
+        <div>{gameStatus ? this.listEmoji() : this.gamestatusFalse()}</div>
+      </div>
+    )
+  }
+}
+export default EmojiGame
+
+
+#####################
+/* Write your code here. */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  background-image: linear-gradient(#9796f0, #fbc7d4);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.emojiCont {
+  height: 75vh;
+  width: 70vw;
+  background-color: transparent;
+  border-style: solid;
+  border-color: aqua;
+  justify-self: center;
+  margin-top: 5vh;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+#############################################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// Write your code here.
+import './index.css'
+
+const NavBar = props => {
+  const {idList, topScore, tempScore} = props
+  return (
+    <nav className="navCont">
+      <div className="logoWithName">
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/game-logo-img.png"
+          alt=" emoji logo"
+          className="logo"
+        />
+        <h1>Emoji Game</h1>
+      </div>
+      <div>
+        <p>Score: {tempScore}</p>
+        <p>Top Score: {topScore}</p>
+      </div>
+    </nav>
+  )
+}
+export default NavBar
+###################################
+/* Write your code here. */
+* {
+  margin: 0px;
+}
+.navCont {
+  background-color: #6a59ff;
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.logo {
+  height: 7vh;
+  background-color: transparent;
+}
+.logoWithName {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-family: roboto;
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$$###############################
+// Write your code here.
+import './index.css'
+
+const EmojiCard = props => {
+  const {first, clickEmoji, key} = props
+  const {id, emojiName, emojiUrl} = first
+
+  const clickEmojie = () => {
+    console.log(`clicked ${id}`)
+    clickEmoji(id)
+  }
+
+  return (
+    <li className="list">
+      <button type="button">
+        <img
+          src={emojiUrl}
+          alt={emojiName}
+          className="images"
+          onClick={clickEmojie}
+        />
+      </button>
+    </li>
+  )
+}
+
+export default EmojiCard
+################################################
+/* Write your code here. */
+.list {
+  list-style-type: none;
+  background-color: #ffffff33;
+  border-style: solid;
+  border-color: #ffffff30;
+  height: 20vh;
+  width: 15vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.images {
+  height: 10vh;
+}
+############################################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%// Write your code here.
+import './index.css'
+
+const WinOrLooseCard = props => {
+  const {isWon, score, onClickPlayAgain} = props
+  const imageUrl = isWon
+    ? 'https://assets.ccbp.in/frontend/react-js/won-game-img.png'
+    : 'https://assets.ccbp.in/frontend/react-js/lose-game-img.png'
+
+  const gameStatus = isWon ? 'You Won' : 'You Lose'
+  const scoreLabel = isWon ? 'Best Score' : 'Score'
+
+  return (
+    <div className="win-or-lose-card">
+      <div className="details-section">
+        <h1 className="game-status">{gameStatus}</h1>
+        <p className="current-score-label">{scoreLabel}</p>
+        <p className="current-score-value">{score}/12</p>
+        <button
+          type="button"
+          className="play-again-button"
+          onClick={onClickPlayAgain}
+        >
+          Play Again
+        </button>
+      </div>
+      <div className="image-section">
+        <img className="win-or-lose-image" src={imageUrl} alt="win or lose" />
+      </div>
+    </div>
+  )
+}
+
+export default WinOrLooseCard
+################################################
+/* Write your code here. */
+.win-or-lose-card {
+  height: 75vh;
+  width: 70vw;
+  background-color: transparent;
+  border-style: solid;
+  border-color: aqua;
+  margin-top: 5vh;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.details-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  order: 1;
+}
+
+.game-status {
+  color: #ffffff;
+  font-family: 'Roboto';
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.current-score-label {
+  text-align: center;
+  color: #ffffff;
+  font-family: 'Roboto';
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.current-score-value {
+  text-align: center;
+  color: #6a59ff;
+  font-family: 'Roboto';
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.play-again-button {
+  color: #3d3d3d;
+  background-color: #ffce27;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  margin: 16px;
+  padding: 16px;
+  padding-right: 24px;
+  padding-left: 24px;
+  cursor: pointer;
+  outline: none;
+}
+
+.image-section {
+  display: flex;
+  justify-content: center;
+  order: 0;
+}
+
+@media screen and (min-width: 992px) {
+  .image-section {
+    order: 1;
+  }
+}
+
+.win-or-lose-image {
+  width: 150px;
+  height: 200px;
+}
+
+@media screen and (min-width: 992px) {
+  .win-or-lose-image {
+    width: 350px;
+    height: 450px;
+  }
+}
