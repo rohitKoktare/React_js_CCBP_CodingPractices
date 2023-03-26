@@ -1,0 +1,259 @@
+// Write your code here
+import {Component} from 'react'
+import './index.css'
+
+class DigitalTimer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      time: 25,
+      timeStat: false,
+      min: 25,
+      sec: 0,
+    }
+  }
+
+  timerProcess = () => {
+    const {time, min, sec, timeStat} = this.state
+    const timerPrecess = time * 60 === sec
+    if (timerPrecess) {
+      this.clearTime()
+      this.setState({timeStat: false})
+    } else {
+      this.setState(prevState => ({
+        sec: prevState.sec + 1,
+      }))
+    }
+  }
+
+  clearTime = () => {
+    clearInterval(this.intervalId)
+  }
+
+  getActualTime = () => {
+    const {time, min, sec, timeStat} = this.state
+    const timeRemain = time * 60 - sec
+    const minutes = Math.floor(timeRemain / 60)
+    const seconds = Math.floor(timeRemain % 60)
+    const stringMin = minutes > 9 ? minutes : `0${minutes}`
+    const stringSec = seconds > 9 ? seconds : `0${seconds}`
+    console.log(time, time)
+
+    return `${stringMin}:${stringSec}`
+  }
+
+  decrement = () => {
+    console.log('decrement clicked')
+    const {time, timeStat} = this.state
+    const greaterThanOne = time > 1
+    if (greaterThanOne && !timeStat) {
+      this.setState(prevState => ({time: prevState.time - 1}))
+    }
+  }
+
+  onIncrement = () => {
+    const {time, timeStat} = this.state
+    if (!timeStat) {
+      this.setState(prevState => ({time: prevState.time + 1}))
+    }
+  }
+
+  resetClicked = () => {
+    this.clearTime()
+    this.setState({time: 25, sec: 0})
+  }
+
+  startTimer = () => {
+    const {time, timeStat, min, sec} = this.state
+    const watchStatus = time * 60 === sec
+    if (watchStatus) {
+      this.setState({sec: 0})
+    }
+    if (timeStat) {
+      this.clearTime()
+    } else {
+      this.intervalId = setInterval(this.timerProcess, 1000)
+    }
+    this.setState(prevState => ({timeStat: !prevState.timeStat}))
+  }
+
+  render() {
+    const {time, timeStat, min, sec} = this.state
+    const imageUrl = timeStat
+      ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
+      : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
+    const altUrl = timeStat ? 'pause icon' : 'play icon'
+    const name = timeStat ? 'Pause' : 'Start'
+    const dispayStatus = !timeStat ? 'Paused' : 'Running'
+    return (
+      <div className="bgContainer">
+        <h1>Digital Timer</h1>
+        <div className="horiDisplay">
+          <div className="display">
+            <div className="smallDisplay">
+              <h1 className="timeDisplay">{this.getActualTime()}</h1>
+              <p>{dispayStatus}</p>
+            </div>
+          </div>
+          <div className="otherDisplay">
+            <div>
+              <div className="buttonsCont">
+                <div className="individualbutton">
+                  <button
+                    type="button"
+                    className="button"
+                    onClick={this.startTimer}
+                  >
+                    <img src={imageUrl} alt={altUrl} className="startReset" />
+                    {name}
+                  </button>
+                </div>
+                <div className="individualbutton">
+                  <button
+                    type="button"
+                    className="button"
+                    onClick={this.resetClicked}
+                  >
+                    <img
+                      src="https://assets.ccbp.in/frontend/react-js/reset-icon-img.png"
+                      alt="reset icon"
+                      className="startReset"
+                    />
+                  </button>
+                  Reset
+                </div>
+              </div>
+            </div>
+            <p>Set Timer limit</p>
+            <div className="settingTimerBox">
+              <button type="button" onClick={this.decrement}>
+                -
+              </button>
+              <p>{time}</p>
+              <button type="button" onClick={this.onIncrement}>
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default DigitalTimer
+###############################################
+
+/* Write your CSS here */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  background-image: linear-gradient(
+    to right,
+    #ffffff,
+    #cffcf1,
+    #cffcf1,
+    #defafe
+  );
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.display {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/digital-timer-elapsed-bg.png');
+  height: 500px;
+  width: 500px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.smallDisplay {
+  background-color: #ffffff;
+  height: 200px;
+  width: 200px;
+  border-radius: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.timeDisplay {
+  color: #00d9f5;
+}
+.horiDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.buttonsCont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100px;
+  width: 450px;
+  align-items: center;
+  border-color: red;
+  border-style: solid;
+}
+.startReset {
+  height: 5vh;
+  margin-top: 7px;
+}
+.otherDisplay {
+  height: 500px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  background-color: transparent;
+  border: none;
+}
+.individualbutton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  justify-content: space-around;
+}
+.settingTimerBox {
+  display: flex;
+  height: 100px;
+  width: 200px;
+  border-color: aqua;
+  border-style: solid;
+  justify-content: space-around;
+  align-items: center;
+}
+###############################
+import DigitalTimer from './components/DigitalTimer'
+
+import './App.css'
+
+const App = () => <DigitalTimer />
+
+export default App
+#################################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root'),
+)
