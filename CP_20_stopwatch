@@ -1,0 +1,120 @@
+// Write your code here
+import {Component} from 'react'
+import './index.css'
+
+class Stopwatch extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {time: 0}
+  }
+
+  addTime = () => {
+    this.setState(prevState => ({time: prevState.time + 1}))
+  }
+
+  stopTimer = () => {
+    clearInterval(this.timerId)
+    console.log('stop clicked')
+  }
+
+  resetClicked = () => {
+    clearInterval(this.timerId)
+    this.setState({time: 0})
+  }
+
+  startTimer = () => {
+    const {time} = this.setState
+    this.timerId = setInterval(() => {
+      this.addTime()
+    }, 1000)
+    console.log('timer clicked')
+  }
+
+  getTimerDiaplay = () => {
+    const {time} = this.state
+    const getMinutes = Math.floor(time / 60)
+    const getSeconds = Math.floor(time % 60)
+    const minutes = getMinutes > 9 ? getMinutes : `0${getMinutes}`
+    const seconds = getSeconds > 9 ? getSeconds : `0${getSeconds}`
+    return `${minutes}:${seconds}`
+  }
+
+  render() {
+    const {time} = this.state
+    return (
+      <div className="bgContainer">
+        <h1 className="heading">Stopwatch</h1>
+        <div className="watchContainer">
+          <div className="timerCont">
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/stopwatch-timer.png"
+              alt="stopwatch"
+              className="watchImg"
+            />
+            <p>Timer</p>
+          </div>
+          <h1 className="displayNumbers">{this.getTimerDiaplay()}</h1>
+          <div className="buttonCont">
+            <button type="button" onClick={this.startTimer}>
+              Start
+            </button>
+            <button type="button" onClick={this.stopTimer}>
+              Stop
+            </button>
+            <button type="button" onClick={this.resetClicked}>
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Stopwatch
+#########################################^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/* Write CSS here */
+* {
+  margin: 0px;
+}
+.bgContainer {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/stopwatch-lg-bg.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 10%;
+  padding-top: 7%;
+}
+.watchContainer {
+  height: 45vh;
+  width: 25vw;
+  box-shadow: 0px 4px 16px 0px #bfbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.heading {
+  padding-left: 5%;
+}
+.timerCont {
+  display: flex;
+  width: 80px;
+  justify-content: space-around;
+}
+.buttonCont {
+  display: flex;
+  justify-content: space-around;
+  height: 30px;
+  width: 25vw;
+  border-color: red;
+  border-style: solid;
+}
+.displayNumbers {
+  font-size: 75px;
+}
