@@ -1,0 +1,176 @@
+import {Route, Switch} from 'react-router-dom'
+import Header from './components/Header'
+import Home from './components/Home'
+import About from './components/About'
+import Contact from './components/Contact'
+import NotFound from './components/NotFound'
+import './App.css'
+
+const App = () => (
+  <div className="bgContainer">
+    <div className="mainContainer">
+      <Header />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/contact" component={Contact} />
+        <Route component={NotFound} />
+      </Switch>
+    </div>
+  </div>
+)
+
+export default App
+###########################
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Write your CSS code here */
+.bgContainer {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+.mainContainer {
+  height: 90vh;
+  width: 80vw;
+  border-color: #551e53;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+#############################################&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// Write your JS code here
+import {Link} from 'react-router-dom'
+import './index.css'
+
+const Header = () => {
+  const a = null
+  return (
+    <nav className="headerContainer">
+      <div className="logoCont">
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/wave-logo-img.png"
+          alt="wave"
+          className="imageLogo"
+        />
+        <h1>Wave</h1>
+      </div>
+      <ul className="tabsContainer">
+        <li className="line">
+          <Link className="link" to="/">
+            Home
+          </Link>
+        </li>
+        <li className="line">
+          <Link className="link" to="/about">
+            About
+          </Link>
+        </li>
+        <li className="line">
+          <Link className="link" to="/contact">
+            Contact
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  )
+}
+
+export default Header
+####################################
+/* Write your CSS code here */
+* {
+  margin: 0px;
+}
+.headerContainer {
+  height: 10vh;
+  width: 80vw;
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.imageLogo {
+  height: 8vh;
+}
+.logoCont {
+  display: flex;
+  width: 200px;
+  border-color: black;
+  border-style: solid;
+  justify-content: space-around;
+  align-items: center;
+}
+.tabsContainer {
+  width: 400px;
+  border-color: black;
+  border-radius: 10px;
+  border-style: solid;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style-type: none;
+}
+.line {
+  list-style-type: none;
+  color: #12022f;
+  font-size: 20px;
+  font-family: roboto;
+}
+.link {
+  font-weight: 600;
+  text-decoration: none;
+}
+#########################################
+// Write your JS code here
+import './index.css'
+
+const Home = () => {
+  const a = null
+  return (
+    <div className="homeCont">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/home-blog-img.png"
+        alt="home"
+        className="homeImg"
+      />
+      <h1>Home</h1>
+    </div>
+  )
+}
+
+export default Home
+#############################################%%%%%%%%%%%%%%%%%%%%%%%
+/* Write your CSS code here */
+.homeCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.homeImg {
+  height: 30vh;
+}
